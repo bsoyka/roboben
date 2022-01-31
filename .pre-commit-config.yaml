@@ -32,7 +32,7 @@ repos:
     hooks:
       - id: pylint
         name: Run Pylint
-        entry: pylint
+        entry: pipenv run pylint
         language: system
         types: [python]
         args:
