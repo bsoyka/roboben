@@ -1,0 +1,22 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+loguru = "*"
+pydantic = {extras = ["dotenv"], version = "*"}
+arrow = "*"
+fuzzywuzzy = "*"
+python-levenshtein = "*"
+py-cord = {git = "https://github.com/Pycord-Development/pycord"}
+requests = "*"
+
+[dev-packages]
+black = "*"
+isort = "*"
+pylint = "*"
+pre-commit = "*"
+
+[requires]
+python_version = "3.10"
