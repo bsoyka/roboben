@@ -1,0 +1,42 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.5.0
+    hooks:
+      - id: check-ast
+        name: Verify valid Python AST
+      - id: check-case-conflict
+        name: Check for conflicting file name casing
+      - id: check-merge-conflict
+        name: Check for merge conflict strings
+      - id: check-yaml
+        name: Check YAML
+      - id: end-of-file-fixer
+        name: End files with newlines
+      - id: mixed-line-ending
+        args: [--fix=crlf]
+        name: Fix line endings
+      - id: trailing-whitespace
+        name: Trim trailing whitespace
+  - repo: https://github.com/psf/black
+    rev: 22.1.0
+    hooks:
+      - id: black
+        language_version: python3.10
+        name: Format Python code
+  - repo: https://github.com/pycqa/isort
+    rev: 5.10.1
+    hooks:
+      - id: isort
+        name: Sort Python imports
+  - repo: local
+    hooks:
+      - id: pylint
+        name: Run Pylint
+        entry: pylint
+        language: system
+        types: [python]
+        args:
+          [
+            "-rn", # Only display messages
+            "-sn", # Don't display the score
+          ]
