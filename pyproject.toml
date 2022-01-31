@@ -1,0 +1,8 @@
+[tool.isort]
+profile = "black"
+py_version = 310
+known_first_party = ["bot"]
+line_length = 120
+
+[tool.black]
+line_length = 120
