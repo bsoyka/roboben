@@ -1,8 +1,9 @@
 version = 1
 
 [[analyzers]]
-name = "python"
 enabled = true
+name = "python"
 
-  [analyzers.meta]
-  runtime_version = "3.x.x"
+[analyzers.meta]
+max_line_length = 120
+runtime_version = "3.x.x"
