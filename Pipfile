@@ -20,3 +20,8 @@ pre-commit = "*"
 
 [requires]
 python_version = "3.10"
+
+[scripts]
+bot = "python -m bot"
+lint = "pre-commit run --all-files"
+pre-commit = "pre-commit install"
