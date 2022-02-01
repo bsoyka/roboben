@@ -17,6 +17,7 @@ def walk_extensions() -> Iterator[str]:
     """Yields extension names from the bot.exts subpackage."""
 
     def on_error(name: str) -> NoReturn:
+        """Raises an exception when an extension cannot be imported."""
         raise ImportError(name=name)
 
     for module in pkgutil.walk_packages(exts.__path__, f"{exts.__name__}.", onerror=on_error):
