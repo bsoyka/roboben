@@ -15,7 +15,7 @@ from bot.bot import RobobenBot
 from bot.utils import LinePaginator
 
 COMMANDS_PER_PAGE = 8
-PREFIX = constants.bot.prefix
+PREFIX = constants.Bot.prefix
 
 NOT_ALLOWED_TO_RUN_MESSAGE = "***You cannot run this command.***\n\n"
 

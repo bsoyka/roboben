@@ -19,7 +19,7 @@ class Traffic(Cog):
         """Welcomes new members."""
         logger.debug(f"{member} ({member.id}) has joined {member.guild}, sending welcome in #off-topic")
 
-        channel = member.guild.get_channel(constants.channels.off_topic)
+        channel = member.guild.get_channel(constants.Channels.off_topic)
 
         embed = Embed(color=Color.green(), description=f"Welcome to **{member.guild.name}**, {member.mention}!")
         embed.set_author(name="Welcome!", icon_url=member.display_avatar.url)
@@ -33,7 +33,7 @@ class Traffic(Cog):
         """Posts notifications when members leave."""
         logger.debug(f"{member} ({member.id}) has left {member.guild}, sending goodbye in #off-topic")
 
-        channel = member.guild.get_channel(constants.channels.off_topic)
+        channel = member.guild.get_channel(constants.Channels.off_topic)
 
         embed = Embed(color=Color.red(), description=f"Goodbye, {member.mention}!")
         embed.set_author(name="Goodbye!", icon_url=member.display_avatar.url)

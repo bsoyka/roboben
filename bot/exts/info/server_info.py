@@ -24,7 +24,7 @@ class ServerInfo(Cog):
         created = f"<t:{creation_time}:R>"
 
         # Member status
-        py_invite = await self.bot.fetch_invite(constants.server.invite)
+        py_invite = await self.bot.fetch_invite(constants.Server.invite)
         online_presences = py_invite.approximate_presence_count
         offline_presences = py_invite.approximate_member_count - online_presences
         member_status = f":green_circle: {online_presences:,} " f":black_circle: {offline_presences:,}"

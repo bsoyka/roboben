@@ -5,4 +5,4 @@ from bot.bot import RobobenBot
 
 instance = RobobenBot.create()
 instance.load_extensions()
-instance.run(constants.bot.token)
+instance.run(constants.Bot.token)

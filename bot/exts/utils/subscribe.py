@@ -22,7 +22,7 @@ class AssignableRole:
     name: t.Optional[str] = None  # This gets populated within Subscribe.init_cog()
 
 
-ASSIGNABLE_ROLES = (AssignableRole(constants.roles.updates),)
+ASSIGNABLE_ROLES = (AssignableRole(constants.Roles.updates),)
 
 ITEMS_PER_ROW = 3
 DELETE_MESSAGE_AFTER = 300  # Seconds
@@ -116,7 +116,7 @@ class Subscribe(commands.Cog):
         """
         await self.bot.wait_until_ready()
 
-        self.guild = self.bot.get_guild(constants.server.id)
+        self.guild = self.bot.get_guild(constants.Server.id)
 
         for role in ASSIGNABLE_ROLES:
             discord_role = self.guild.get_role(role.role_id)

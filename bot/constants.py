@@ -1,39 +1,29 @@
 """Constant values for the bot."""
 
-from pathlib import Path
-
-from pydantic import BaseSettings, Field
+from os import environ
 
 
-class Bot(BaseSettings):
+class Bot:
     """Bot-related settings."""
 
-    prefix: str
-    token: str
+    prefix: str = environ.get("PREFIX", "!")
+    token: str = environ["TOKEN"]
 
 
-class Server(BaseSettings):
+class Server:
     """Server-related constants."""
 
-    invite: str
-    id: int = Field(..., env="SERVER_ID")
+    invite: str = environ.get("INVITE", "4kssDaYNHp")
+    id: int = int(environ.get("SERVER_ID", 854165018866483240))
 
 
-class Roles(BaseSettings):
+class Roles:
     """Role IDs."""
 
-    updates: int = Field(..., env="ROLE_UPDATES")
+    updates: int = int(environ.get("ROLE_UPDATES", 924753745210925170))
 
 
-class Channels(BaseSettings):
+class Channels:
     """Channel IDs."""
 
-    off_topic: int = Field(..., env="OFF_TOPIC_ID")
-
-
-kwargs = dict(_env_file=Path(__file__).parent.parent / ".env")
-
-bot = Bot(**kwargs)
-server = Server(**kwargs)
-roles = Roles(**kwargs)
-channels = Channels(**kwargs)
+    off_topic: int = int(environ.get("CHANNEL_OFF_TOPIC", 854165019444117509))

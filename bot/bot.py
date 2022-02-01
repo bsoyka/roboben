@@ -20,13 +20,13 @@ class RobobenBot(commands.Bot):
     def create(cls) -> RobobenBot:
         """Creates an instance of the Roboben bot."""
         loop = get_event_loop()
-        activity = Activity(name=constants.bot.prefix + "help", type=ActivityType.watching)
+        activity = Activity(name=constants.Bot.prefix + "help", type=ActivityType.watching)
 
         intents = Intents.all()
 
         return cls(
             loop=loop,
-            command_prefix=commands.when_mentioned_or(constants.bot.prefix),
+            command_prefix=commands.when_mentioned_or(constants.Bot.prefix),
             activity=activity,
             case_insensitive=True,
             max_messages=10_000,
