@@ -15,7 +15,7 @@ from bot.converters import Extension
 from bot.utils import LinePaginator
 from bot.utils.extensions import EXTENSIONS
 
-UNLOAD_BLACKLIST = {f"{exts.__name__}.utils.extensions", f"{exts.__name__}.moderation.modlog"}
+UNLOAD_BLOCKLIST = {f"{exts.__name__}.utils.extensions", f"{exts.__name__}.moderation.modlog"}
 BASE_PATH_LEN = len(exts.__name__.split("."))
 
 
@@ -68,11 +68,11 @@ class Extensions(commands.Cog):
             await ctx.send_help(ctx.command)
             return
 
-        if blacklisted := "\n".join(UNLOAD_BLACKLIST & set(extensions)):
-            msg = f":x: The following extension(s) may not be unloaded:```\n{blacklisted}```"
+        if blocklisted := "\n".join(UNLOAD_BLOCKLIST & set(extensions)):
+            msg = f":x: The following extension(s) may not be unloaded:```\n{blocklisted}```"
         else:
             if "*" in extensions or "**" in extensions:
-                extensions = set(self.bot.extensions.keys()) - UNLOAD_BLACKLIST
+                extensions = set(self.bot.extensions.keys()) - UNLOAD_BLOCKLIST
 
             msg = self.batch_manage(Action.UNLOAD, *extensions)
 
