@@ -54,7 +54,6 @@ class CustomHelpCommand(commands.HelpCommand):
 
     async def command_callback(self, ctx: commands.Context, *, command: Optional[str] = None) -> None:
         """Attempts to match the provided query with a valid command or cog."""
-
         # The only reason we need to tamper with this is because d.py does not
         # support "categories", so we need to deal with them ourselves.
 
@@ -97,7 +96,6 @@ class CustomHelpCommand(commands.HelpCommand):
 
         Options and choices are case sensitive.
         """
-
         # Get all commands, including subcommands and full command name aliases
         choices = set()
         for command in await self.filter_commands(self.context.bot.walk_commands()):
@@ -173,7 +171,6 @@ class CustomHelpCommand(commands.HelpCommand):
         It will add an author, command signature + help, aliases and a note if
         the user can't run the command.
         """
-
         embed = Embed()
         embed.set_author(name="Command Help")
 
@@ -205,7 +202,6 @@ class CustomHelpCommand(commands.HelpCommand):
 
     async def send_command_help(self, command: commands.Command) -> None:
         """Send help for a single command."""
-
         embed = await self.command_formatting(command)
         await self.context.send(embed=embed)
 
@@ -218,7 +214,6 @@ class CustomHelpCommand(commands.HelpCommand):
         return_as_list is helpful for passing these command details into the
         paginator as a list of command details.
         """
-
         details = []
         for command in commands_:
             signature = f" {command.signature}" if command.signature else ""
@@ -230,7 +225,6 @@ class CustomHelpCommand(commands.HelpCommand):
 
     async def send_group_help(self, group: commands.Group) -> None:
         """Sends help for a group command."""
-
         subcommands = group.commands
 
         if len(subcommands) == 0:
@@ -273,7 +267,6 @@ class CustomHelpCommand(commands.HelpCommand):
         A zero width space is used as a prefix for results with no cogs to
         force them last in ordering.
         """
-
         if not command.cog:
             return "**\u200bNo Category:**"
 
@@ -288,7 +281,6 @@ class CustomHelpCommand(commands.HelpCommand):
         This sends a brief help for all commands in all cogs registered to the
         category.
         """
-
         embed = Embed()
         embed.set_author(name="Command Help")
 
