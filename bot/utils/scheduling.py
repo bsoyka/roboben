@@ -25,8 +25,8 @@ class Scheduler:
         """Schedules `coroutine` to start immediately."""
         logger.trace(f"{self.name}: Scheduling task #{task_id}")
 
-        msg = f"Cannot schedule an already started coroutine for #{task_id}"
-        assert getcoroutinestate(coroutine) == "CORO_CREATED", msg
+        if getcoroutinestate(coroutine) != "CORO_CREATED":
+            raise ValueError(f"Cannot schedule an already started coroutine for #{task_id}")
 
         if task_id in self._scheduled_tasks:
             logger.debug(f"{self.name}: Did not schedule task #{task_id}; task was already scheduled")
