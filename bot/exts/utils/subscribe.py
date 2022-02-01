@@ -66,6 +66,9 @@ class SingleRoleButton(discord.ui.Button):
         self.role = role
         self.assigned = assigned
 
+        self.style = style
+        self.label = label
+
     async def callback(self, interaction: Interaction) -> None:
         """Updates the member's role and change button text to reflect current
         text.
