@@ -130,8 +130,7 @@ class CustomHelpCommand(commands.HelpCommand):
 
         # Run fuzzywuzzy's processor beforehand, and avoid matching if processed string is empty
         # This avoids fuzzywuzzy from raising a warning on inputs with only non-alphanumeric characters
-        processed = full_process(string)
-        if processed:
+        if processed := full_process(string):
             result = process.extractBests(
                 processed,
                 choices,
@@ -182,8 +181,7 @@ class CustomHelpCommand(commands.HelpCommand):
         # Show command aliases
         aliases = [f"`{alias}`" if not parent else f"`{parent} {alias}`" for alias in command.aliases]
         aliases += [f"`{alias}`" for alias in getattr(command, "root_aliases", ())]
-        aliases = ", ".join(sorted(aliases))
-        if aliases:
+        if aliases := ", ".join(sorted(aliases)):
             command_details += f"**Can also use:** {aliases}\n\n"
 
         # Display if the command is disabled or cannot be run by the user
@@ -237,8 +235,7 @@ class CustomHelpCommand(commands.HelpCommand):
 
         embed = await self.command_formatting(group)
 
-        command_details = self.get_commands_brief_details(commands_)
-        if command_details:
+        if command_details := self.get_commands_brief_details(commands_):
             embed.description += f"\n**Subcommands:**\n{command_details}"
 
         await self.context.send(embed=embed)
@@ -253,8 +250,7 @@ class CustomHelpCommand(commands.HelpCommand):
         embed.set_author(name="Command Help")
         embed.description = f"**{cog.qualified_name}**\n*{cog.description}*"
 
-        command_details = self.get_commands_brief_details(commands_)
-        if command_details:
+        if command_details := self.get_commands_brief_details(commands_):
             embed.description += f"\n\n**Commands:**\n{command_details}"
 
         await self.context.send(embed=embed)

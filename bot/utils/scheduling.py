@@ -142,9 +142,8 @@ class Scheduler:
             )
 
         with suppress(asyncio.CancelledError):
-            exception = done_task.exception()
             # Log the exception if one exists.
-            if exception:
+            if exception := done_task.exception():
                 logger.opt(exception=exception).error(f"{self.name}: Error in task #{task_id} {id(done_task)}!")
 
 
