@@ -2,7 +2,8 @@
 
 import random
 
-import discord
+from discord import Color, Embed, Message
+from discord.abc import User
 from discord.ext.commands import Context
 
 NEGATIVE_REPLIES = {
@@ -26,9 +27,14 @@ NEGATIVE_REPLIES = {
 }
 
 
-async def send_denial(ctx: Context, reason: str) -> discord.Message:
+async def send_denial(ctx: Context, reason: str) -> Message:
     """Sends an embed denying the user with the given reason."""
-    embed = discord.Embed(description=reason, color=discord.Color.red())
+    embed = Embed(description=reason, color=Color.red())
     embed.title = random.choice(tuple(NEGATIVE_REPLIES))
 
     return await ctx.send(embed=embed)
+
+
+def format_user(user: User) -> str:
+    """Returns a string for `user` which has their mention and ID."""
+    return f"{user.mention} (`{user.id}`)"

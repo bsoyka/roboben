@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "2202db862b79f3e3aa30ad56eb93b70ca2cd43cee61a59e806ba782d62e7b8d3"
+            "sha256": "4b144a56cdeaefe5d2e4bdd58a7bd5c501affca7263955772821d95e6d2a169c"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -138,7 +138,7 @@
                 "sha256:2842d8f5e82a1f6aa437380934d5e1cd4fcf2003b06fed6940769c164a480a45",
                 "sha256:98398a9d69ee80548c762ba991a4728bfc3836768ed226b3945908d1a688371c"
             ],
-            "markers": "python_version >= '3'",
+            "markers": "python_full_version >= '3.5.0'",
             "version": "==2.0.11"
         },
         "colorama": {
@@ -148,6 +148,14 @@
             ],
             "markers": "sys_platform == 'win32'",
             "version": "==0.4.4"
+        },
+        "deepdiff": {
+            "hashes": [
+                "sha256:1ffb38c3b5d9174eb2df95850c93aee55ec00e19396925036a2e680f725079e0",
+                "sha256:838766484e323dcd9dec6955926a893a83767dc3f3f94542773e6aa096efe5d4"
+            ],
+            "index": "pypi",
+            "version": "==5.7.0"
         },
         "frozenlist": {
             "hashes": [
@@ -302,6 +310,13 @@
             ],
             "markers": "python_version >= '3.7'",
             "version": "==6.0.2"
+        },
+        "ordered-set": {
+            "hashes": [
+                "sha256:ba93b2df055bca202116ec44b9bead3df33ea63a7d5827ff8e16738b97f33a95"
+            ],
+            "markers": "python_full_version >= '3.5.0'",
+            "version": "==4.0.2"
         },
         "py-cord": {
             "git": "https://github.com/Pycord-Development/pycord",

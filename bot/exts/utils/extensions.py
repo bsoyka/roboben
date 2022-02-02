@@ -15,7 +15,7 @@ from bot.converters import Extension
 from bot.utils import LinePaginator
 from bot.utils.extensions import EXTENSIONS
 
-UNLOAD_BLOCKLIST = {f"{exts.__name__}.utils.extensions", f"{exts.__name__}.moderation.modlog"}
+UNLOAD_BLOCKLIST = {f"{exts.__name__}.utils.extensions", f"{exts.__name__}.moderation.mod_log"}
 BASE_PATH_LEN = len(exts.__name__.split("."))
 
 
