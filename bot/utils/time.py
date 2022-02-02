@@ -32,7 +32,7 @@ def humanize_delta(
     precision: _Precision = "seconds",
     max_units: int = 6,
 ) -> str:
-    """sReturn a human-readable version of a `relativedelta`.
+    """Returns a human-readable version of a `relativedelta`.
 
     `precision` is the smallest unit of time to include (e.g. "seconds", "minutes").
     `max_units` is the maximum number of units of time to include.

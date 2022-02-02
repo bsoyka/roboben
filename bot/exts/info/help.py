@@ -155,7 +155,6 @@ class CustomHelpCommand(commands.HelpCommand):
 
     async def send_error_message(self, error: HelpQueryNotFound) -> None:
         """Sends the error message to the channel."""
-
         embed = Embed(colour=Color.red(), title=str(error))
 
         if getattr(error, "possible_matches", None):
@@ -242,7 +241,6 @@ class CustomHelpCommand(commands.HelpCommand):
 
     async def send_cog_help(self, cog: commands.Cog) -> None:
         """Sends help for a cog."""
-
         # Sort commands by name, and remove any the user can't run or are hidden.
         commands_ = await self.filter_commands(cog.get_commands(), sort=True)
 
