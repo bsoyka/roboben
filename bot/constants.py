@@ -47,7 +47,7 @@ class Channels:
 
 def _get_color_env(name: str, default: tuple[int, int, int]) -> Color:
     """Gets an RGB color value from the environment."""
-    color_str = environ.get(name, None)
+    color_str = environ.get(name)
 
     rgb = default if color_str is None else tuple(map(int, color_str.split(",")))
 
