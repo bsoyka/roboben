@@ -4,7 +4,6 @@ import re
 from random import randint
 from typing import Optional, Union
 
-import requests
 from discord import Color, Embed
 from discord.ext import tasks
 from discord.ext.commands import Cog, Context, command
@@ -31,12 +30,11 @@ class XKCD(Cog):
     @tasks.loop(minutes=30)
     async def get_latest_comic_info(self) -> None:
         """Refreshes latest comic's information ever 30 minutes."""
-        resp = requests.get(f"{BASE_URL}/info.0.json")
-
-        if resp.ok:
-            self.latest_comic_info = resp.json()
-        else:
-            logger.warning(f"Failed to get latest XKCD comic information. Status code {resp.status_code}")
+        async with self.bot.http_session.get(f"{BASE_URL}/info.0.json") as resp:
+            if resp.ok:
+                self.latest_comic_info = await resp.json()
+            else:
+                logger.warning(f"Failed to get latest XKCD comic information. Status code {resp.status}")
 
     @command(name="xkcd")
     async def fetch_xkcd_comics(self, ctx: Context, comic: Optional[str] = None) -> None:
@@ -59,16 +57,15 @@ class XKCD(Cog):
         if comic == "latest":
             info = self.latest_comic_info
         else:
-            resp = requests.get(f"{BASE_URL}/{comic}/info.0.json")
-
-            if resp.ok:
-                info = resp.json()
-            else:
-                embed.title = f"XKCD comic #{comic}"
-                embed.description = f"{resp.status_code}: Could not retrieve xkcd comic #{comic}."
-                logger.debug(f"Retrieving xkcd comic #{comic} failed with status code {resp.status_code}.")
-                await ctx.send(embed=embed)
-                return
+            async with self.bot.http_session.get(f"{BASE_URL}/{comic}/info.0.json") as resp:
+                if resp.ok:
+                    info = await resp.json()
+                else:
+                    embed.title = f"XKCD comic #{comic}"
+                    embed.description = f"{resp.status}: Could not retrieve xkcd comic #{comic}."
+                    logger.debug(f"Retrieving xkcd comic #{comic} failed with status code {resp.status}.")
+                    await ctx.send(embed=embed)
+                    return
 
         embed.title = f"XKCD comic #{info['num']}"
         embed.description = info["alt"]

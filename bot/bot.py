@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from asyncio import Event, get_event_loop
 
+import aiohttp
 from discord import Activity, ActivityType, AllowedMentions, Guild, HTTPException, Intents
 from discord.ext import commands
 from loguru import logger
@@ -16,8 +17,10 @@ class RobobenBot(commands.Bot):
 
     # pylint: disable=abstract-method,too-many-ancestors
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, http_session: aiohttp.ClientSession, **kwargs):
         super().__init__(*args, **kwargs)
+
+        self.http_session = http_session
 
         self._guild_available = Event()
 
@@ -30,6 +33,7 @@ class RobobenBot(commands.Bot):
         intents = Intents.all()
 
         return cls(
+            http_session=aiohttp.ClientSession(loop=loop),
             loop=loop,
             command_prefix=commands.when_mentioned_or(constants.Bot.prefix),
             activity=activity,
