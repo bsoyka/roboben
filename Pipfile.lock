@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "4b144a56cdeaefe5d2e4bdd58a7bd5c501affca7263955772821d95e6d2a169c"
+            "sha256": "4a8cb391eb911221bad552a9d83d45b224d9bbf307f12374c34b42ad8e474f28"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -91,7 +91,7 @@
                 "sha256:fa0ffcace9b3aa34d205d8130f7873fcfefcb6a4dd3dd705b0dab69af6712642",
                 "sha256:fc5471e1a54de15ef71c1bc6ebe80d4dc681ea600e68bfd1cbce40427f0b7578"
             ],
-            "markers": "python_version >= '3.6'",
+            "index": "pypi",
             "version": "==3.8.1"
         },
         "aiosignal": {
@@ -104,11 +104,11 @@
         },
         "arrow": {
             "hashes": [
-                "sha256:05caf1fd3d9a11a1135b2b6f09887421153b94558e5ef4d090b567b47173ac2b",
-                "sha256:d622c46ca681b5b3e3574fcb60a04e5cc81b9625112d5fb2b44220c36c892177"
+                "sha256:3515630f11a15c61dcb4cdd245883270dd334c83f3e639824e65a4b79cc48543",
+                "sha256:399c9c8ae732270e1aa58ead835a79a40d7be8aa109c579898eb41029b5a231d"
             ],
             "index": "pypi",
-            "version": "==1.2.2"
+            "version": "==1.0.3"
         },
         "async-timeout": {
             "hashes": [
@@ -156,6 +156,14 @@
             ],
             "index": "pypi",
             "version": "==5.7.0"
+        },
+        "discord-timestamps": {
+            "hashes": [
+                "sha256:74fbe91b68e01ef276ffa063577ac1135dee785d673dd019bf30c9b59db5e0cf",
+                "sha256:a15af4a663ac4f1499c919e0ae36b10f3df6f52f5e51199be71a5fbd2cd6fcee"
+            ],
+            "index": "pypi",
+            "version": "==1.0.1"
         },
         "frozenlist": {
             "hashes": [
@@ -320,7 +328,7 @@
         },
         "py-cord": {
             "git": "https://github.com/Pycord-Development/pycord",
-            "ref": "68e9cf3db5c311153899a0c577c68d88c0feb4cf"
+            "ref": "4dadb69dd1d0a5b33798722e0479a993037c996b"
         },
         "python-dateutil": {
             "hashes": [
@@ -347,11 +355,11 @@
         },
         "setuptools": {
             "hashes": [
-                "sha256:c99207037c38984eae838c2fd986f39a9ddf4fabfe0fddd957e622d1d1dcdd05",
-                "sha256:eb83b1012ae6bf436901c2a2cee35d45b7260f31fd4b65fd1e50a9f99c11d7f8"
+                "sha256:a4dc3af29a67e7a45620aba43dde2c1af2dd6bc49726d78168f0cc6c4fb0c01b",
+                "sha256:c9097cbcdefe88a64da966a764f2d95feb1cfaff77cc304528a23cefe3359d9a"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==60.6.0"
+            "version": "==60.7.1"
         },
         "six": {
             "hashes": [
@@ -685,11 +693,11 @@
         },
         "setuptools": {
             "hashes": [
-                "sha256:c99207037c38984eae838c2fd986f39a9ddf4fabfe0fddd957e622d1d1dcdd05",
-                "sha256:eb83b1012ae6bf436901c2a2cee35d45b7260f31fd4b65fd1e50a9f99c11d7f8"
+                "sha256:a4dc3af29a67e7a45620aba43dde2c1af2dd6bc49726d78168f0cc6c4fb0c01b",
+                "sha256:c9097cbcdefe88a64da966a764f2d95feb1cfaff77cc304528a23cefe3359d9a"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==60.6.0"
+            "version": "==60.7.1"
         },
         "six": {
             "hashes": [

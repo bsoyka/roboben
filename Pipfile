@@ -11,6 +11,8 @@ python-levenshtein = "*"
 py-cord = {git = "https://github.com/Pycord-Development/pycord"}
 requests = "*"
 deepdiff = "*"
+aiohttp = "*"
+discord-timestamps = "*"
 
 [dev-packages]
 black = "*"

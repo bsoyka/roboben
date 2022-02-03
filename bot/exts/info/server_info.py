@@ -1,7 +1,9 @@
 """Server information command."""
 
+import arrow
 from discord import Color, Embed
 from discord.ext.commands import Cog, Context, command
+from discord_timestamps import TimestampType, format_timestamp
 
 from bot import constants
 from bot.bot import RobobenBot
@@ -20,8 +22,8 @@ class ServerInfo(Cog):
         """Displays information about the server."""
         embed = Embed(title="Server Information", color=Color.blurple())
 
-        creation_time = int(ctx.guild.created_at.replace(tzinfo=None).timestamp())
-        created = f"<t:{creation_time}:R>"
+        creation_time = arrow.get(ctx.guild.created_at)
+        created = format_timestamp(creation_time, TimestampType.RELATIVE)
 
         # Member status
         py_invite = await self.bot.fetch_invite(constants.Server.invite)

@@ -3,22 +3,22 @@
 import asyncio
 import difflib
 import itertools
-from datetime import datetime, timezone
+from datetime import timedelta
 from typing import Optional
 
+import arrow
 import discord
-from dateutil.relativedelta import relativedelta
 from deepdiff import DeepDiff
 from discord import Color, Message, Thread
 from discord.abc import GuildChannel
 from discord.ext.commands import Cog, Context
 from discord.utils import escape_markdown
+from discord_timestamps import TimestampType, format_timestamp
 from loguru import logger
 
 from bot.bot import RobobenBot
 from bot.constants import Channels, Colors, Event, Roles, Server
 from bot.utils.messages import format_user
-from bot.utils.time import humanize_delta
 
 GUILD_CHANNEL = discord.CategoryChannel | discord.TextChannel | discord.VoiceChannel
 
@@ -347,12 +347,14 @@ class ModLog(Cog):
         if member.guild.id != Server.id:
             return
 
-        now = datetime.now(timezone.utc)
-        difference = abs(relativedelta(now, member.created_at))
+        created_at = arrow.get(member.created_at)
+        timestamp = format_timestamp(created_at, TimestampType.RELATIVE)
 
-        message = format_user(member) + "\n\n**Account age:** " + humanize_delta(difference)
+        message = format_user(member) + "\n\n**Account created:** " + timestamp
 
-        if difference.days < 1 and difference.months < 1 and difference.years < 1:  # New user account!
+        age = arrow.utcnow() - created_at
+
+        if age < timedelta(days=1):  # New user account!
             message = f"🐥 {message}"
 
         await self.send_log_message(
@@ -420,8 +422,12 @@ class ModLog(Cog):
         """
         if member.timed_out:
             # Member was timed out
-            timestamp = int(member.communication_disabled_until.timestamp())
-            message = f"{format_user(member)}\n\n" f"**Until:** <t:{timestamp}> (<t:{timestamp}:R>)"
+            timestamp = arrow.get(member.communication_disabled_until)
+
+            short_datetime = format_timestamp(timestamp)
+            relative_time = format_timestamp(timestamp, TimestampType.RELATIVE)
+
+            message = f"{format_user(member)}\n\n" f"**Until:** {short_datetime} ({relative_time})"
             await self.send_log_message(
                 message,
                 "User timed out",
@@ -681,8 +687,8 @@ class ModLog(Cog):
             # Message was previously edited, to assist with self-bot detection, use the edited_at
             # datetime as the baseline and create a human-readable delta between this edit event
             # and the last time the message was edited
-            delta = humanize_delta(msg_after.edited_at - msg_before.edited_at)
-            footer = f"Last edited {delta} ago"
+            timestamp = format_timestamp(arrow.get(msg_before.edited_at), TimestampType.RELATIVE)
+            footer = f"Last edited {timestamp}"
         else:
             # Message was not previously edited, use the created_at datetime as the baseline, no
             # delta calculation needed
