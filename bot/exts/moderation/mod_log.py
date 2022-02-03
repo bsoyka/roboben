@@ -687,7 +687,7 @@ class ModLog(Cog):
             # Message was previously edited, to assist with self-bot detection, use the edited_at
             # datetime as the baseline and create a human-readable delta between this edit event
             # and the last time the message was edited
-            timestamp = format_timestamp(arrow.get(msg_before.edited_at), TimestampType.RELATIVE)
+            timestamp = arrow.get(msg_before.edited_at).humanize()
             footer = f"Last edited {timestamp}"
         else:
             # Message was not previously edited, use the created_at datetime as the baseline, no
