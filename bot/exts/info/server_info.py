@@ -30,7 +30,7 @@ class ServerInfo(Cog):
         member_status = f":green_circle: {online_presences:,} " f":black_circle: {offline_presences:,}"
 
         embed.description = f"Created: {created}\nMember status: {member_status}"
-        embed.set_thumbnail(url=ctx.guild.icon_url)
+        embed.set_thumbnail(url=ctx.guild.icon.url)
 
         # Members
         total_members = f"{ctx.guild.member_count:,}"
