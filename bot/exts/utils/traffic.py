@@ -17,6 +17,9 @@ class Traffic(Cog):
     @Cog.listener()
     async def on_member_join(self, member: Member) -> None:
         """Welcomes new members."""
+        if member.bot:
+            return
+
         logger.debug(f"{member} ({member.id}) has joined {member.guild}, sending welcome in #off-topic")
 
         channel = member.guild.get_channel(constants.Channels.off_topic)
