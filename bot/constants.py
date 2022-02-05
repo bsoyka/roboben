@@ -33,10 +33,15 @@ class Roles:
     updates: int = int(environ.get("ROLE_UPDATES", 924753745210925170))
 
 
+MODERATION_ROLES = {Roles.moderators, Roles.admins}
+
+
 class Channels:
     """Channel IDs."""
 
     off_topic: int = int(environ.get("CHANNEL_OFF_TOPIC", 854165019444117509))
+
+    moderator_alerts: int = int(environ.get("CHANNEL_MODERATOR_ALERTS", 939350486706978926))
 
     mod_log: int = int(environ.get("CHANNEL_MOD_LOG", 854357156861968464))
     user_log: int = int(environ.get("CHANNEL_USER_LOG", 938087637720367135))

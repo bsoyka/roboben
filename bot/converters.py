@@ -1,5 +1,7 @@
 """Custom converters for the bot."""
 
+import re
+
 from discord.ext.commands import BadArgument, Context, Converter
 
 from bot import exts
@@ -38,3 +40,32 @@ class Extension(Converter):
             return matches[0]
 
         raise BadArgument(f":x: Could not find the extension `{argument}`.")
+
+
+class HushDurationConverter(Converter):
+    """Convert passed duration to `int` minutes or `None`."""
+
+    MINUTES_RE = re.compile(r"(\d+)(?:M|m|$)")
+
+    async def convert(self, ctx: Context, argument: str) -> int:
+        """
+        Convert `argument` to a duration that's max 15 minutes or None.
+
+        If `"forever"` is passed, -1 is returned; otherwise an int of the extracted time.
+        Accepted formats are:
+        * <duration>,
+        * <duration>m,
+        * <duration>M,
+        * forever.
+        """
+        if argument == "forever":
+            return -1
+
+        match = self.MINUTES_RE.match(argument)
+        if not match:
+            raise BadArgument(f"{argument} is not a valid minutes duration.")
+
+        duration = int(match.group(1))
+        if duration > 15:
+            raise BadArgument("Duration must be at most 15 minutes.")
+        return duration
