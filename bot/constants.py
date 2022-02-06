@@ -2,8 +2,13 @@
 
 from enum import Enum
 from os import environ
+from pathlib import Path
+from urllib.parse import quote_plus
 
 from discord import Color
+from dotenv import load_dotenv
+
+load_dotenv(Path(__file__).parent.parent.joinpath(".env"))
 
 
 class Bot:
@@ -71,6 +76,17 @@ class Webhooks:
     """Webhook IDs."""
 
     dev_log: int = int(environ.get("WEBHOOK_DEV_LOG", 938278912339890208))
+
+
+class Database:
+    """Mongo database information."""
+
+    schema: str = environ.get("DB_SCHEMA", "mongodb+srv")
+    host: str = environ.get("DB_HOST", "cluster0.1y4xg.mongodb.net")
+    user: str = environ.get("DB_USER", "roboben")
+    password: str = environ["DB_PASSWORD"]
+
+    uri = f"{schema}://{quote_plus(user)}:{password}@{host}"
 
 
 class Event(Enum):

@@ -1,8 +1,47 @@
+[tool.poetry]
+authors = ["Ben Soyka <bensoyka@icloud.com>"]
+description = ""
+name = "roboben"
+version = "0.1.0"
+
+[tool.poetry.dependencies]
+aiohttp = "^3.7.0"
+arrow = "^1.0.1"
+beanie = "^1.8.12"
+deepdiff = "^5.7.0"
+discord-timestamps = "^1.0.1"
+dnspython = "^2.2.0"
+fuzzywuzzy = "^0.18.0"
+loguru = "^0.6.0"
+motor = "^2.5.1"
+py-cord = {git = "https://github.com/Pycord-Development/pycord"}
+pydantic = "^1.9.0"
+python = "^3.10"
+python-Levenshtein = "^0.12.2"
+python-dotenv = "^0.19.2"
+requests = "^2.27.1"
+
+[tool.poetry.dev-dependencies]
+black = "^22.1.0"
+isort = "^5.10.1"
+pre-commit = "^2.17.0"
+pylint = "^2.12.2"
+taskipy = "^1.9.0"
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=1.0.0"]
+
 [tool.isort]
-profile = "black"
-py_version = 310
 known_first_party = ["bot"]
 line_length = 120
+profile = "black"
+py_version = 310
 
 [tool.black]
 line_length = 120
+
+[tool.taskipy.tasks]
+lint = "pre-commit run --all-files"
+pre-commit = "pre-commit install"
+start = "python -m bot"

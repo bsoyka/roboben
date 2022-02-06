@@ -3,13 +3,17 @@
 from __future__ import annotations
 
 from asyncio import Event, get_event_loop
+from typing import Optional
 
 import aiohttp
+from beanie import init_beanie
 from discord import Activity, ActivityType, AllowedMentions, Guild, HTTPException, Intents
 from discord.ext import commands
 from loguru import logger
+from motor.motor_asyncio import AsyncIOMotorClient
 
-from bot import constants
+from bot import constants, models
+from bot.utils.scheduling import create_task
 
 
 class RobobenBot(commands.Bot):
@@ -21,8 +25,19 @@ class RobobenBot(commands.Bot):
         super().__init__(*args, **kwargs)
 
         self.http_session = http_session
+        self.database: Optional[AsyncIOMotorClient] = None
 
         self._guild_available = Event()
+
+        self._db_init_task = create_task(self._init_db(), event_loop=self.loop)
+
+    async def _init_db(self) -> None:
+        """Initializes the database."""
+        self.database = AsyncIOMotorClient(constants.Database.uri)
+
+        await init_beanie(self.database["users"], document_models=[models.User])
+
+        logger.info("Database initialized")
 
     @classmethod
     def create(cls) -> RobobenBot:
