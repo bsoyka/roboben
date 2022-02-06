@@ -35,7 +35,7 @@ class RobobenBot(commands.Bot):
         """Initializes the database."""
         self.database = AsyncIOMotorClient(constants.Database.uri)
 
-        await init_beanie(self.database["users"], document_models=[models.User])
+        await init_beanie(self.database["roboben"], document_models=[models.User])
 
         logger.info("Database initialized")
 
