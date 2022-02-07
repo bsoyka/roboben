@@ -35,6 +35,8 @@ async def send_denial(ctx: Context, reason: str) -> Message:
     return await ctx.send(embed=embed)
 
 
-def format_user(user: User) -> str:
+def format_user(user: User, *, include_username: bool = False) -> str:
     """Returns a string for `user` which has their mention and ID."""
+    if include_username:
+        return f"{user.mention} (`{user}`, `{user.id}`)"
     return f"{user.mention} (`{user.id}`)"

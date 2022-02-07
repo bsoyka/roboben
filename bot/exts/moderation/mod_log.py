@@ -332,7 +332,7 @@ class ModLog(Cog):
             return
 
         await self.send_log_message(
-            format_user(member),
+            format_user(member, include_username=True),
             "User banned",
             color=Colors.red,
             thumbnail=member.display_avatar.url,
@@ -348,7 +348,7 @@ class ModLog(Cog):
         created_at = arrow.get(member.created_at)
         timestamp = format_timestamp(created_at, TimestampType.RELATIVE)
 
-        message = format_user(member) + "\n\n**Account created:** " + timestamp
+        message = format_user(member, include_username=True) + "\n\n**Account created:** " + timestamp
 
         age = arrow.utcnow() - created_at
 
@@ -374,7 +374,7 @@ class ModLog(Cog):
             return
 
         await self.send_log_message(
-            format_user(member),
+            format_user(member, include_username=True),
             "User left",
             color=Colors.red,
             thumbnail=member.display_avatar.url,
@@ -392,7 +392,7 @@ class ModLog(Cog):
             return
 
         await self.send_log_message(
-            format_user(member),
+            format_user(member, include_username=True),
             "User unbanned",
             thumbnail=member.display_avatar.url,
         )
@@ -425,7 +425,9 @@ class ModLog(Cog):
             short_datetime = format_timestamp(timestamp)
             relative_time = format_timestamp(timestamp, TimestampType.RELATIVE)
 
-            message = f"{format_user(member)}\n\n" f"**Until:** {short_datetime} ({relative_time})"
+            message = (
+                f"{format_user(member, include_username=True)}\n\n" f"**Until:** {short_datetime} ({relative_time})"
+            )
             await self.send_log_message(
                 message,
                 "User timed out",
@@ -436,7 +438,7 @@ class ModLog(Cog):
         else:
             # Member was un-timed out
             await self.send_log_message(
-                format_user(member),
+                format_user(member, include_username=True),
                 "User timeout ended manually",
                 color=Colors.green,
                 thumbnail=member.display_avatar.url,
@@ -484,7 +486,7 @@ class ModLog(Cog):
 
         message = "\n".join(f"• {item}" for item in sorted(changes))
 
-        message = f"{format_user(after)}\n{message}"
+        message = f"{format_user(after, include_username=True)}\n{message}"
 
         await self.send_log_message(
             message,
@@ -544,7 +546,7 @@ class ModLog(Cog):
 
         if channel.category:
             response = (
-                f"**Author:** {format_user(author)}\n"
+                f"**Author:** {format_user(author, include_username=True)}\n"
                 f"**Channel:** {channel.category}/{channel.mention} (`{channel.id}`)\n"
                 f"**Message ID:** `{message.id}`\n"
                 f"[Jump to message]({message.jump_url})\n"
@@ -552,7 +554,7 @@ class ModLog(Cog):
             )
         else:
             response = (
-                f"**Author:** {format_user(author)}\n"
+                f"**Author:** {format_user(author, include_username=True)}\n"
                 f"**Channel:** {channel.mention} (`{channel.id}`)\n"
                 f"**Message ID:** `{message.id}`\n"
                 f"[Jump to message]({message.jump_url})\n"
@@ -671,7 +673,7 @@ class ModLog(Cog):
             elif diff_type == "-":
                 content_before.append(f"[{sub}](http://o.hi)")
         response = (
-            f"**Author:** {format_user(msg_before.author)}\n"
+            f"**Author:** {format_user(msg_before.author, include_username=True)}\n"
             f"**Channel:** {channel_name} (`{channel.id}`)\n"
             f"**Message ID:** `{msg_before.id}`\n"
             "\n"
@@ -723,7 +725,7 @@ class ModLog(Cog):
         channel_name = f"{channel.category}/{channel.mention}" if channel.category else f"{channel.mention}"
 
         before_response = (
-            f"**Author:** {format_user(message.author)}\n"
+            f"**Author:** {format_user(message.author, include_username=True)}\n"
             f"**Channel:** {channel_name} (`{channel.id}`)\n"
             f"**Message ID:** `{message.id}`\n"
             "\n"
@@ -731,7 +733,7 @@ class ModLog(Cog):
         )
 
         after_response = (
-            f"**Author:** {format_user(message.author)}\n"
+            f"**Author:** {format_user(message.author, include_username=True)}\n"
             f"**Channel:** {channel_name} (`{channel.id}`)\n"
             f"**Message ID:** `{message.id}`\n"
             "\n"
@@ -883,7 +885,7 @@ class ModLog(Cog):
             return
 
         message = "\n".join(f"• {item}" for item in sorted(changes))
-        message = f"{format_user(member)}\n{message}"
+        message = f"{format_user(member, include_username=True)}\n{message}"
 
         await self.send_log_message(
             message,
