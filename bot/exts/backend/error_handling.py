@@ -66,7 +66,7 @@ class ErrorHandling(Cog):
         elif isinstance(error, errors.ArgumentParsingError):
             await self._send_error_embed(ctx, "Argument parsing error", str(error))
         else:
-            send_denial(
+            await send_denial(
                 ctx,
                 "Something about your input seems off. Check the arguments and try again.",
             )
@@ -89,7 +89,7 @@ class ErrorHandling(Cog):
             logger.debug(f"User {ctx.message.author} tried to invoke command in DM: {ctx.message.content}")
             await send_denial(ctx, "Sorry, I can't do that in DMs.")
 
-    async def handle_unexpected_error(self, ctx: Context, error: errors.CommandError) -> None:
+    async def handle_unexpected_error(self, ctx: Context, error: Exception) -> None:
         """Handles unexpected errors."""
         logger.opt(exception=error).error(
             f"Error executing command invoked by {ctx.message.author}: {ctx.message.content}"

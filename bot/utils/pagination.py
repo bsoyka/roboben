@@ -142,7 +142,8 @@ class LinePaginator(Paginator):
         self._count = len(self.prefix) + 1
         self.close_page()
 
-    def _split_remaining_words(self, line: str, max_chars: int) -> t.Tuple[str, t.Optional[str]]:
+    @staticmethod
+    def _split_remaining_words(line: str, max_chars: int) -> t.Tuple[str, t.Optional[str]]:
         """Splits a line into two strings: reduced_words and remaining_words.
 
         reduced_words: the remaining words in `line`, after attempting to remove
@@ -221,6 +222,7 @@ class LinePaginator(Paginator):
         >>> embed.set_author(name="Some Operation", url=url, icon_url=icon)
         >>> await LinePaginator.paginate([line for line in lines], ctx, embed)
         """
+
         # pylint: disable=too-many-arguments,too-many-locals,too-many-branches,too-many-statements
 
         def event_check(reaction_: discord.Reaction, user_: discord.Member) -> bool:
@@ -308,23 +310,9 @@ class LinePaginator(Paginator):
                 await message.remove_reaction(reaction.emoji, user)
                 current_page = 0
 
-                embed.description = paginator.pages[current_page]
-                if footer_text:
-                    embed.set_footer(text=f"{footer_text} (Page {current_page + 1}/{len(paginator.pages)})")
-                else:
-                    embed.set_footer(text=f"Page {current_page + 1}/{len(paginator.pages)}")
-                await message.edit(embed=embed)
-
             if reaction.emoji == LAST_EMOJI:
                 await message.remove_reaction(reaction.emoji, user)
                 current_page = len(paginator.pages) - 1
-
-                embed.description = paginator.pages[current_page]
-                if footer_text:
-                    embed.set_footer(text=f"{footer_text} (Page {current_page + 1}/{len(paginator.pages)})")
-                else:
-                    embed.set_footer(text=f"Page {current_page + 1}/{len(paginator.pages)}")
-                await message.edit(embed=embed)
 
             if reaction.emoji == LEFT_EMOJI:
                 await message.remove_reaction(reaction.emoji, user)
@@ -334,15 +322,6 @@ class LinePaginator(Paginator):
 
                 current_page -= 1
 
-                embed.description = paginator.pages[current_page]
-
-                if footer_text:
-                    embed.set_footer(text=f"{footer_text} (Page {current_page + 1}/{len(paginator.pages)})")
-                else:
-                    embed.set_footer(text=f"Page {current_page + 1}/{len(paginator.pages)}")
-
-                await message.edit(embed=embed)
-
             if reaction.emoji == RIGHT_EMOJI:
                 await message.remove_reaction(reaction.emoji, user)
 
@@ -351,14 +330,14 @@ class LinePaginator(Paginator):
 
                 current_page += 1
 
-                embed.description = paginator.pages[current_page]
+            embed.description = paginator.pages[current_page]
 
-                if footer_text:
-                    embed.set_footer(text=f"{footer_text} (Page {current_page + 1}/{len(paginator.pages)})")
-                else:
-                    embed.set_footer(text=f"Page {current_page + 1}/{len(paginator.pages)}")
+            if footer_text:
+                embed.set_footer(text=f"{footer_text} (Page {current_page + 1}/{len(paginator.pages)})")
+            else:
+                embed.set_footer(text=f"Page {current_page + 1}/{len(paginator.pages)}")
 
-                await message.edit(embed=embed)
+            await message.edit(embed=embed)
 
         with suppress(discord.NotFound):
             await message.clear_reactions()

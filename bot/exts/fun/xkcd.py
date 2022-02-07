@@ -29,7 +29,7 @@ class XKCD(Cog):
 
     @tasks.loop(minutes=30)
     async def get_latest_comic_info(self) -> None:
-        """Refreshes latest comic's information ever 30 minutes."""
+        """Refreshes the latest comic's information every 30 minutes."""
         async with self.bot.http_session.get(f"{BASE_URL}/info.0.json") as resp:
             if resp.ok:
                 self.latest_comic_info = await resp.json()

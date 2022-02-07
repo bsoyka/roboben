@@ -38,11 +38,10 @@ class SilenceNotifier(tasks.Loop):
 
     def __init__(self, alert_channel: TextChannel, loop: AbstractEventLoop):
         super().__init__(
-            self._notifier, seconds=1, minutes=0, hours=0, count=None, reconnect=True, loop=None, time=MISSING
+            self._notifier, seconds=1, minutes=0, hours=0, count=None, reconnect=True, loop=loop, time=MISSING
         )
         self._silenced_channels = {}
         self._alert_channel = alert_channel
-        self.loop = loop
 
     def add_channel(self, channel: TextChannel) -> None:
         """Add channel to `_silenced_channels` and start loop if not launched."""
@@ -109,8 +108,9 @@ class Silence(commands.Cog):
         self.notifier = SilenceNotifier(self.bot.get_channel(Channels.mod_log), self.bot.loop)
         await self._reschedule()
 
+    @staticmethod
     async def send_message(
-        self, message: str, source_channel: TextChannel, target_channel: TextChannel, *, alert_target: bool = False
+        message: str, source_channel: TextChannel, target_channel: TextChannel, *, alert_target: bool = False
     ) -> None:
         """Helper function to send message confirmation to `source_channel`, and notification to `target_channel`."""
         # Reply to invocation channel
@@ -220,7 +220,7 @@ class Silence(commands.Cog):
         else:
             self.scheduler.schedule_later(duration * 60, channel.id, ctx.invoke(self.unsilence, channel=channel))
             unsilence_time = datetime.now(tz=timezone.utc) + timedelta(minutes=duration)
-            self.unsilence_timestamps[channel.id] = unsilence_time.timestamp()
+            self.unsilence_timestamps[channel.id] = int(unsilence_time.timestamp())
 
     @commands.command(aliases=("unhush",))
     async def unsilence(self, ctx: Context, *, channel: TextChannel = None) -> None:

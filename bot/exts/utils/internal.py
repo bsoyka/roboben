@@ -67,7 +67,7 @@ class Internal(Cog):
 
         if out is None:
             # No output, return the input statement
-            return (res, None)
+            return res, None
 
         res += f"Out[{self.line}]: "
 

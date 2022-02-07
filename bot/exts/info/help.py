@@ -54,7 +54,7 @@ class CustomHelpCommand(commands.HelpCommand):
 
     async def command_callback(self, ctx: commands.Context, *, command: Optional[str] = None) -> None:
         """Attempts to match the provided query with a valid command or cog."""
-        # The only reason we need to tamper with this is because d.py does not
+        # The only reason we need to tamper with this is that d.py does not
         # support "categories", so we need to deal with them ourselves.
 
         bot = ctx.bot

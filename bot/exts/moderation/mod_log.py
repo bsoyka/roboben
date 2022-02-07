@@ -67,11 +67,9 @@ class ModLog(Cog):
         """Generates a log embed and sends it to a logging channel."""
         await self.bot.wait_until_guild_available()
         # Truncate string directly here to avoid removing newlines
-        embed = discord.Embed(description=text[:4093] + "..." if len(text) > 4096 else text)
+        embed = discord.Embed(description=text[:4093] + "..." if len(text) > 4096 else text, color=color)
 
         embed.set_author(name=title)
-
-        embed.color = color
 
         if footer:
             embed.set_footer(text=footer)
