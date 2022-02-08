@@ -14,7 +14,6 @@ from bot.bot import RobobenBot
 from bot.constants import MODERATION_ROLES, Colors, Event
 from bot.converters import Duration
 from bot.models import Infraction
-from bot.utils import scheduling
 from bot.utils.messages import format_user
 
 SUPPORTED_INFRACTIONS = {}
@@ -36,13 +35,6 @@ class Infractions(Cog):
 
     def __init__(self, bot: RobobenBot):
         self.bot = bot
-        self.scheduler = scheduling.Scheduler("infractions")
-
-        # scheduling.create_task(self.reschedule_infractions(SUPPORTED_INFRACTIONS), event_loop=self.bot.loop)
-
-    def cog_unload(self) -> None:
-        """Cancels scheduled tasks."""
-        self.scheduler.cancel_all()
 
     @property
     def mod_log(self) -> Cog:

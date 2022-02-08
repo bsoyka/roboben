@@ -222,7 +222,6 @@ class LinePaginator(Paginator):
         >>> embed.set_author(name="Some Operation", url=url, icon_url=icon)
         >>> await LinePaginator.paginate([line for line in lines], ctx, embed)
         """
-
         # pylint: disable=too-many-arguments,too-many-locals,too-many-branches,too-many-statements
 
         def event_check(reaction_: discord.Reaction, user_: discord.Member) -> bool:
