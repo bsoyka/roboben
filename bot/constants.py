@@ -55,6 +55,12 @@ class Channels:
     server_log: int = int(environ.get("CHANNEL_SERVER_LOG", 938087710386696233))
 
 
+class Categories:
+    """Category IDs."""
+
+    mod_mail: int = int(environ.get("CATEGORY_MOD_MAIL", 940442223596671007))
+
+
 def _get_color_env(name: str, default: tuple[int, int, int]) -> Color:
     """Gets an RGB color value from the environment."""
     color_str = environ.get(name)

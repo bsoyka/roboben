@@ -17,7 +17,7 @@ from discord_timestamps import TimestampType, format_timestamp
 from loguru import logger
 
 from bot.bot import RobobenBot
-from bot.constants import Channels, Colors, Event, Roles, Server
+from bot.constants import Categories, Channels, Colors, Event, Roles, Server
 from bot.utils.messages import format_user
 
 GUILD_CHANNEL = discord.CategoryChannel | discord.TextChannel | discord.VoiceChannel
@@ -512,6 +512,7 @@ class ModLog(Cog):
         1. Channels not in the guild we care about (constants.Guild.id).
         2. Channels that mods do not have view permissions to
         3. Channels in constants.Guild.modlog_blacklist
+        4. ModMail channels
         """
         channel = self.bot.get_channel(channel_id)
 
@@ -527,6 +528,11 @@ class ModLog(Cog):
         if not channel.permissions_for(channel.guild.get_role(Roles.moderators)).view_channel:
             return True
 
+        # Ignore the ModMail category.
+        if channel.category and channel.category.id == Categories.mod_mail:
+            return True
+
+        # Ignore channels in the blacklist.
         return channel.id in Server.modlog_blocklist
 
     async def log_cached_deleted_message(self, message: discord.Message) -> None:
