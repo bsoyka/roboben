@@ -4,10 +4,10 @@ import asyncio
 import typing as t
 from contextlib import suppress
 
-import discord
-from discord import Member
-from discord.abc import User
-from discord.ext.commands import Context, Paginator
+import disnake
+from disnake import Member
+from disnake.abc import User
+from disnake.ext.commands import Context, Paginator
 
 FIRST_EMOJI = "\u23EE"  # [:track_previous:]
 LEFT_EMOJI = "\u2B05"  # [:arrow_left:]
@@ -101,7 +101,7 @@ class LinePaginator(Paginator):
         size.
 
         This function overrides the `Paginator.add_line` from inside
-        `discord.ext.commands`. It overrides in order to allow us to configure
+        `disnake.ext.commands`. It overrides in order to allow us to configure
         the maximum number of lines per page.
         """
         remaining_words = None
@@ -189,7 +189,7 @@ class LinePaginator(Paginator):
         cls,
         lines: t.List[str],
         ctx: Context,
-        embed: discord.Embed,
+        embed: disnake.Embed,
         prefix: str = "",
         suffix: str = "",
         max_lines: t.Optional[int] = None,
@@ -201,7 +201,7 @@ class LinePaginator(Paginator):
         footer_text: str = None,
         url: str = None,
         exception_on_empty_embed: bool = False,
-    ) -> t.Optional[discord.Message]:
+    ) -> t.Optional[disnake.Message]:
         """Uses a paginator and set of reactions to provide pagination over a
         set of lines.
 
@@ -218,13 +218,13 @@ class LinePaginator(Paginator):
         default) or to any user with a moderation role.
 
         Example:
-        >>> embed = discord.Embed()
+        >>> embed = disnake.Embed()
         >>> embed.set_author(name="Some Operation", url=url, icon_url=icon)
         >>> await LinePaginator.paginate([line for line in lines], ctx, embed)
         """
         # pylint: disable=too-many-arguments,too-many-locals,too-many-branches,too-many-statements
 
-        def event_check(reaction_: discord.Reaction, user_: discord.Member) -> bool:
+        def event_check(reaction_: disnake.Reaction, user_: disnake.Member) -> bool:
             """Makes sure that this reaction is what we want to operate on."""
             no_restrictions = (
                 # The reaction was by a whitelisted user
@@ -338,5 +338,5 @@ class LinePaginator(Paginator):
 
             await message.edit(embed=embed)
 
-        with suppress(discord.NotFound):
+        with suppress(disnake.NotFound):
             await message.clear_reactions()

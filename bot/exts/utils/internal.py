@@ -9,8 +9,8 @@ import traceback
 from io import StringIO
 from typing import Any, Optional
 
-import discord
-from discord.ext.commands import Cog, Context, group, is_owner
+import disnake
+from disnake.ext.commands import Cog, Context, group, is_owner
 
 from bot.bot import RobobenBot
 from bot.utils import find_nth_occurrence
@@ -27,7 +27,7 @@ class Internal(Cog):
 
         self._ = None
 
-    def _format(self, inp: str, out: Any) -> tuple[str, Optional[discord.Embed]]:
+    def _format(self, inp: str, out: Any) -> tuple[str, Optional[disnake.Embed]]:
         """Formats the eval output into a string and attempts to format it into
         an Embed.
         """
@@ -71,7 +71,7 @@ class Internal(Cog):
 
         res += f"Out[{self.line}]: "
 
-        if isinstance(out, discord.Embed):
+        if isinstance(out, disnake.Embed):
             # We made an embed? Send that as embed
             res += "<Embed>"
             res = (res, out)
@@ -106,7 +106,7 @@ class Internal(Cog):
 
         return res  # Return (text, embed)
 
-    async def _eval(self, ctx: Context, code: str) -> Optional[discord.Message]:
+    async def _eval(self, ctx: Context, code: str) -> Optional[disnake.Message]:
         """Evaluates the input code string and sends an embed to the invoking
         context.
         """
@@ -126,7 +126,7 @@ class Internal(Cog):
             "self": self,
             "bot": self.bot,
             "inspect": inspect,
-            "discord": discord,
+            "disnake": disnake,
             "contextlib": contextlib,
         }
 

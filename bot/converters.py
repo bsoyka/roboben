@@ -4,7 +4,7 @@ import re
 
 import arrow
 from dateutil.relativedelta import relativedelta
-from discord.ext.commands import BadArgument, Context, Converter
+from disnake.ext.commands import BadArgument, Context, Converter
 
 from bot import exts
 from bot.utils import time

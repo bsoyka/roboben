@@ -4,9 +4,9 @@ import functools
 import typing as t
 from enum import Enum
 
-from discord import Color, Embed
-from discord.ext import commands
-from discord.ext.commands import Context, group
+from disnake import Color, Embed
+from disnake.ext import commands
+from disnake.ext.commands import Context, group
 from loguru import logger
 
 from bot import exts

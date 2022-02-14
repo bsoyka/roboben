@@ -1,4 +1,4 @@
-"""Our custom instance of discord.ext.commands.Bot."""
+"""Our custom instance of disnake.ext.commands.Bot."""
 
 from __future__ import annotations
 
@@ -7,8 +7,8 @@ from typing import Optional
 
 import aiohttp
 from beanie import init_beanie
-from discord import Activity, ActivityType, AllowedMentions, Guild, HTTPException, Intents
-from discord.ext import commands
+from disnake import Activity, ActivityType, AllowedMentions, Guild, HTTPException, Intents
+from disnake.ext import commands
 from loguru import logger
 from motor.motor_asyncio import AsyncIOMotorClient
 
@@ -17,7 +17,7 @@ from bot.utils.scheduling import create_task
 
 
 class RobobenBot(commands.Bot):
-    """Our custom instance of discord.ext.commands.Bot."""
+    """Our custom instance of disnake.ext.commands.Bot."""
 
     # pylint: disable=abstract-method,too-many-ancestors
 

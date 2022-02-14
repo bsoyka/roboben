@@ -2,9 +2,9 @@
 
 import random
 
-from discord import Color, Embed, Message
-from discord.abc import User
-from discord.ext.commands import Context
+from disnake import Color, Embed, Message
+from disnake.abc import User
+from disnake.ext.commands import Context
 
 NEGATIVE_REPLIES = {
     "Noooooo!!",

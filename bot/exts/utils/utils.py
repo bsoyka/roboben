@@ -1,7 +1,7 @@
 """Random utilities."""
 
-from discord import Embed
-from discord.ext.commands import BadArgument, Cog, Context, clean_content, command
+from disnake import Embed
+from disnake.ext.commands import BadArgument, Cog, Context, clean_content, command
 
 from bot.bot import RobobenBot
 

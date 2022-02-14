@@ -1,7 +1,7 @@
 """Traffic watching cog."""
 
-from discord import Color, Embed, Member
-from discord.ext.commands import Cog
+from disnake import Color, Embed, Member
+from disnake.ext.commands import Cog
 from loguru import logger
 
 from bot import constants

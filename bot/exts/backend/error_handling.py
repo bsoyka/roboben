@@ -1,7 +1,7 @@
 """Command error handling."""
 
-from discord import Message
-from discord.ext.commands import Cog, Context, errors
+from disnake import Message
+from disnake.ext.commands import Cog, Context, errors
 from loguru import logger
 
 from bot.bot import RobobenBot

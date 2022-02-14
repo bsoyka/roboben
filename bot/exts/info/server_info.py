@@ -1,9 +1,9 @@
 """Server information command."""
 
 import arrow
-from discord import Color, Embed
-from discord.ext.commands import Cog, Context, command
 from discord_timestamps import TimestampType, format_timestamp
+from disnake import Color, Embed
+from disnake.ext.commands import Cog, Context, command
 
 from bot import constants
 from bot.bot import RobobenBot

@@ -4,9 +4,9 @@ import re
 from random import randint
 from typing import Optional, Union
 
-from discord import Color, Embed
-from discord.ext import tasks
-from discord.ext.commands import Cog, Context, command
+from disnake import Color, Embed
+from disnake.ext import tasks
+from disnake.ext.commands import Cog, Context, command
 from loguru import logger
 
 from bot.bot import RobobenBot

@@ -5,8 +5,8 @@ from collections import namedtuple
 from contextlib import suppress
 from typing import Optional
 
-from discord import Color, Embed
-from discord.ext import commands
+from disnake import Color, Embed
+from disnake.ext import commands
 from fuzzywuzzy import fuzz, process
 from fuzzywuzzy.utils import full_process
 

@@ -5,7 +5,7 @@ from os import environ
 from pathlib import Path
 from urllib.parse import quote_plus
 
-from discord import Color
+from disnake import Color
 from dotenv import load_dotenv
 
 load_dotenv(Path(__file__).parent.parent.joinpath(".env"))

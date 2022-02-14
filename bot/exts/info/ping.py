@@ -1,7 +1,7 @@
 """Ping command."""
 
-from discord import Color, Embed
-from discord.ext.commands import Cog, Context, command
+from disnake import Color, Embed
+from disnake.ext.commands import Cog, Context, command
 
 from bot.bot import RobobenBot
 

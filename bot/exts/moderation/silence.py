@@ -5,10 +5,10 @@ from contextlib import suppress
 from datetime import datetime, timedelta, timezone
 from typing import Optional, OrderedDict
 
-from discord import TextChannel, Thread
-from discord.ext import commands, tasks
-from discord.ext.commands import Context
-from discord.utils import MISSING
+from disnake import TextChannel, Thread
+from disnake.ext import commands, tasks
+from disnake.ext.commands import Context
+from disnake.utils import MISSING
 from loguru import logger
 
 from bot.bot import RobobenBot

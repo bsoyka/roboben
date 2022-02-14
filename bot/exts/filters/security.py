@@ -1,6 +1,6 @@
 """Security-related helpers."""
 
-from discord.ext.commands import Cog, Context, NoPrivateMessage
+from disnake.ext.commands import Cog, Context, NoPrivateMessage
 
 from bot.bot import RobobenBot
 

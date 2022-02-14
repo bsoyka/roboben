@@ -7,20 +7,20 @@ from datetime import timedelta
 from typing import Optional
 
 import arrow
-import discord
+import disnake
 from deepdiff import DeepDiff
-from discord import Color, Message, Thread
-from discord.abc import GuildChannel
-from discord.ext.commands import Cog, Context
-from discord.utils import escape_markdown
 from discord_timestamps import TimestampType, format_timestamp
+from disnake import Color, Message, Thread
+from disnake.abc import GuildChannel
+from disnake.ext.commands import Cog, Context
+from disnake.utils import escape_markdown
 from loguru import logger
 
 from bot.bot import RobobenBot
 from bot.constants import Categories, Channels, Colors, Event, Roles, Server
 from bot.utils.messages import format_user
 
-GUILD_CHANNEL = discord.CategoryChannel | discord.TextChannel | discord.VoiceChannel
+GUILD_CHANNEL = disnake.CategoryChannel | disnake.TextChannel | disnake.VoiceChannel
 
 CHANNEL_CHANGES_UNSUPPORTED = ("permissions",)
 CHANNEL_CHANGES_SUPPRESSED = ("_overwrites", "position")
@@ -55,19 +55,19 @@ class ModLog(Cog):
         text: str,
         title: str,
         *,
-        color: discord.Color | int = Color.blurple(),
-        thumbnail: Optional[str | discord.Asset] = None,
+        color: disnake.Color | int = Color.blurple(),
+        thumbnail: Optional[str | disnake.Asset] = None,
         channel_id: int = Channels.mod_log,
         ping_everyone: bool = False,
-        files: Optional[list[discord.File]] = None,
+        files: Optional[list[disnake.File]] = None,
         content: Optional[str] = None,
-        additional_embeds: Optional[list[discord.Embed]] = None,
+        additional_embeds: Optional[list[disnake.Embed]] = None,
         footer: Optional[str] = None,
     ) -> Context:
         """Generates a log embed and sends it to a logging channel."""
         await self.bot.wait_until_guild_available()
         # Truncate string directly here to avoid removing newlines
-        embed = discord.Embed(description=text[:4093] + "..." if len(text) > 4096 else text, color=color)
+        embed = disnake.Embed(description=text[:4093] + "..." if len(text) > 4096 else text, color=color)
 
         embed.set_author(name=title)
 
@@ -102,10 +102,10 @@ class ModLog(Cog):
         if channel.guild.id != Server.id:
             return
 
-        if isinstance(channel, discord.CategoryChannel):
+        if isinstance(channel, disnake.CategoryChannel):
             title = "Category created"
             message = f"{channel.name} (`{channel.id}`)"
-        elif isinstance(channel, discord.VoiceChannel):
+        elif isinstance(channel, disnake.VoiceChannel):
             title = "Voice channel created"
 
             if channel.category:
@@ -128,14 +128,14 @@ class ModLog(Cog):
         if channel.guild.id != Server.id:
             return
 
-        if isinstance(channel, discord.CategoryChannel):
+        if isinstance(channel, disnake.CategoryChannel):
             title = "Category deleted"
-        elif isinstance(channel, discord.VoiceChannel):
+        elif isinstance(channel, disnake.VoiceChannel):
             title = "Voice channel deleted"
         else:
             title = "Text channel deleted"
 
-        if channel.category and not isinstance(channel, discord.CategoryChannel):
+        if channel.category and not isinstance(channel, disnake.CategoryChannel):
             message = f"{channel.category}/{channel.name} (`{channel.id}`)"
         else:
             message = f"{channel.name} (`{channel.id}`)"
@@ -200,7 +200,7 @@ class ModLog(Cog):
         await self.send_log_message(message, "Channel updated", channel_id=Channels.server_log)
 
     @Cog.listener()
-    async def on_guild_role_create(self, role: discord.Role) -> None:
+    async def on_guild_role_create(self, role: disnake.Role) -> None:
         """Logs role create events to the mod log."""
         if role.guild.id != Server.id:
             return
@@ -213,7 +213,7 @@ class ModLog(Cog):
         )
 
     @Cog.listener()
-    async def on_guild_role_delete(self, role: discord.Role) -> None:
+    async def on_guild_role_delete(self, role: disnake.Role) -> None:
         """Log role delete event to mod log."""
         if role.guild.id != Server.id:
             return
@@ -226,7 +226,7 @@ class ModLog(Cog):
         )
 
     @Cog.listener()
-    async def on_guild_role_update(self, before: discord.Role, after: discord.Role) -> None:
+    async def on_guild_role_update(self, before: disnake.Role, after: disnake.Role) -> None:
         """Logs role update events to the mod log."""
         if before.guild.id != Server.id:
             return
@@ -273,7 +273,7 @@ class ModLog(Cog):
         await self.send_log_message(message, "Role updated", channel_id=Channels.server_log)
 
     @Cog.listener()
-    async def on_guild_update(self, before: discord.Guild, after: discord.Guild) -> None:
+    async def on_guild_update(self, before: disnake.Guild, after: disnake.Guild) -> None:
         """Logs guild update events to the mod log."""
         if before.id != Server.id:
             return
@@ -322,7 +322,7 @@ class ModLog(Cog):
         )
 
     @Cog.listener()
-    async def on_member_ban(self, guild: discord.Guild, member: discord.Member) -> None:
+    async def on_member_ban(self, guild: disnake.Guild, member: disnake.Member) -> None:
         """Logs ban events to the user log."""
         if guild.id != Server.id:
             return
@@ -340,7 +340,7 @@ class ModLog(Cog):
         )
 
     @Cog.listener()
-    async def on_member_join(self, member: discord.Member) -> None:
+    async def on_member_join(self, member: disnake.Member) -> None:
         """Logs member join events to the user log."""
         if member.guild.id != Server.id:
             return
@@ -364,7 +364,7 @@ class ModLog(Cog):
         )
 
     @Cog.listener()
-    async def on_member_remove(self, member: discord.Member) -> None:
+    async def on_member_remove(self, member: disnake.Member) -> None:
         """Logs member leave events to the user log."""
         if member.guild.id != Server.id:
             return
@@ -382,7 +382,7 @@ class ModLog(Cog):
         )
 
     @Cog.listener()
-    async def on_member_unban(self, guild: discord.Guild, member: discord.User) -> None:
+    async def on_member_unban(self, guild: disnake.Guild, member: disnake.User) -> None:
         """Logs member unban events to the mod log."""
         if guild.id != Server.id:
             return
@@ -398,7 +398,7 @@ class ModLog(Cog):
         )
 
     @staticmethod
-    def get_role_diff(before: list[discord.Role], after: list[discord.Role]) -> list[str]:
+    def get_role_diff(before: list[disnake.Role], after: list[disnake.Role]) -> list[str]:
         """Returns a list of strings describing the roles added and removed."""
         before_roles = set(before)
         after_roles = set(after)
@@ -413,7 +413,7 @@ class ModLog(Cog):
 
         return changes
 
-    async def log_member_timeout_change(self, member: discord.Member) -> None:
+    async def log_member_timeout_change(self, member: disnake.Member) -> None:
         """Logs member (un-)timeouts to the mod log.
 
         `member` is the member after the action occurred.
@@ -446,7 +446,7 @@ class ModLog(Cog):
             )
 
     @Cog.listener()
-    async def on_member_update(self, before: discord.Member, after: discord.Member) -> None:
+    async def on_member_update(self, before: disnake.Member, after: disnake.Member) -> None:
         """Logs member update events to the user log."""
         if before.guild.id != Server.id:
             return
@@ -535,7 +535,7 @@ class ModLog(Cog):
         # Ignore channels in the blacklist.
         return channel.id in Server.modlog_blocklist
 
-    async def log_cached_deleted_message(self, message: discord.Message) -> None:
+    async def log_cached_deleted_message(self, message: disnake.Message) -> None:
         """Logs the message's details to the message change log.
 
         This is called when a cached message is deleted.
@@ -589,7 +589,7 @@ class ModLog(Cog):
             channel_id=Channels.message_log,
         )
 
-    async def log_uncached_deleted_message(self, event: discord.RawMessageDeleteEvent) -> None:
+    async def log_uncached_deleted_message(self, event: disnake.RawMessageDeleteEvent) -> None:
         """Logs the message's details to the message change log.
 
         This is called when a message absent from the cache is deleted. Hence,
@@ -628,7 +628,7 @@ class ModLog(Cog):
         )
 
     @Cog.listener()
-    async def on_raw_message_delete(self, event: discord.RawMessageDeleteEvent) -> None:
+    async def on_raw_message_delete(self, event: disnake.RawMessageDeleteEvent) -> None:
         """Logs message deletions to the message change log."""
         if event.cached_message is not None:
             await self.log_cached_deleted_message(event.cached_message)
@@ -636,7 +636,7 @@ class ModLog(Cog):
             await self.log_uncached_deleted_message(event)
 
     @Cog.listener()
-    async def on_message_edit(self, msg_before: discord.Message, msg_after: discord.Message) -> None:
+    async def on_message_edit(self, msg_before: disnake.Message, msg_after: disnake.Message) -> None:
         """Logs message edit events to the message change log."""
         # pylint: disable=too-many-locals
 
@@ -708,13 +708,13 @@ class ModLog(Cog):
         )
 
     @Cog.listener()
-    async def on_raw_message_edit(self, event: discord.RawMessageUpdateEvent) -> None:
+    async def on_raw_message_edit(self, event: disnake.RawMessageUpdateEvent) -> None:
         """Logs raw message edit events to the message change log."""
         await self.bot.wait_until_guild_available()
         try:
             channel = self.bot.get_channel(int(event.data["channel_id"]))
             message = await channel.fetch_message(event.message_id)
-        except discord.NotFound:  # Was deleted before we got the event
+        except disnake.NotFound:  # Was deleted before we got the event
             return
 
         if self.is_message_blocklisted(message):
@@ -836,7 +836,7 @@ class ModLog(Cog):
 
     @Cog.listener()
     async def on_voice_state_update(
-        self, member: discord.Member, before: discord.VoiceState, after: discord.VoiceState
+        self, member: disnake.Member, before: disnake.VoiceState, after: disnake.VoiceState
     ) -> None:
         """Logs member voice state changes to the voice log channel."""
         if (

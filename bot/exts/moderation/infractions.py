@@ -4,10 +4,10 @@ import textwrap
 from typing import Awaitable, Optional
 
 import arrow
-import discord
-from discord import Embed, Member
-from discord.ext.commands import Cog, Context, command, has_any_role
+import disnake
 from discord_timestamps import TimestampType, format_timestamp
+from disnake import Embed, Member
+from disnake.ext.commands import Cog, Context, command, has_any_role
 from loguru import logger
 
 from bot.bot import RobobenBot
@@ -47,7 +47,7 @@ class Infractions(Cog):
         try:
             await user.send(embed=embed)
             return True
-        except (discord.HTTPException, discord.Forbidden, discord.NotFound):
+        except (disnake.HTTPException, disnake.Forbidden, disnake.NotFound):
             logger.debug(
                 f"Infraction-related information could not be sent to user {user} ({user.id}). "
                 "The user either could not be retrieved or probably disabled their DMs."
@@ -82,7 +82,7 @@ class Infractions(Cog):
             INFRACTION_APPEAL_SERVER_FOOTER if infraction_type.lower() == "ban" else INFRACTION_APPEAL_MODMAIL_FOOTER
         )
 
-        embed = discord.Embed(description=text, colour=Colors.red)
+        embed = disnake.Embed(description=text, colour=Colors.red)
 
         embed.set_author(name=INFRACTION_AUTHOR_NAME)
         embed.title = INFRACTION_TITLE
@@ -172,7 +172,7 @@ class Infractions(Cog):
 
             try:
                 await action_coro
-            except discord.HTTPException as error:
+            except disnake.HTTPException as error:
                 # Accordingly, display that applying the infraction failed.
                 confirm_msg = ":x: failed to apply"
                 expiry_msg = ""
@@ -181,7 +181,7 @@ class Infractions(Cog):
 
                 log_msg = f"Failed to apply {' '.join(infraction_type.split('_'))} infraction #{id_} to {user}"
 
-                if isinstance(error, discord.Forbidden):
+                if isinstance(error, disnake.Forbidden):
                     logger.warning(f"{log_msg}: bot lacks permissions.")
                 elif error.code == 10007 or error.status == 404:
                     logger.info(f"Can't apply {infraction.type} to user {infraction.user} because user left the guild.")
